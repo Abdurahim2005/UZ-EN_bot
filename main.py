@@ -1,7 +1,8 @@
 import telebot
 import json
+from telebot.types import ReplyKeyboardMarkup
 import random
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+from telebot.types import InlineKeyboardMarkup,InlineKeyboardButton
 
 # Bot tokenini kiriting
 TOKEN = "7928658663:AAHIFCzzL-2qjkZJwxvoVQ0TQtXqsr3XRr0"
@@ -47,6 +48,12 @@ def start_message(message):
             "🙂Assalomu alaykum! Jinsingizni tanlang:",
             reply_markup=gender_keyboard()
         )
+    elif users[user_id]["gender"] is None:
+        bot.send_message(
+            message.chat.id,
+            "Iltimos, avval jinsingizni tanlang:",
+            reply_markup=gender_keyboard()
+        )
     else:
         bot.send_message(
             message.chat.id,
@@ -56,9 +63,48 @@ def start_message(message):
 
 # Gender tugmachalari
 def gender_keyboard():
-    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     markup.add("Erkak", "Ayol")
     return markup
+
+# Genderni qayta ishlash
+@bot.message_handler(func=lambda message: message.text in ["Erkak", "Ayol"])
+def handle_gender(message):
+    user_id = str(message.from_user.id)
+    if user_id in users:
+        users[user_id]["gender"] = message.text
+        save_users(users)
+        bot.send_message(
+            message.chat.id,
+            f"🙆‍♂️Rahmat! Jinsingiz: {message.text}.",
+            reply_markup=telebot.types.ReplyKeyboardRemove()
+        )
+        show_main_menu(message)
+    else:
+        bot.send_message(
+            message.chat.id,
+            "Xatolik yuz berdi. Iltimos, /start buyrug'ini qayta yuboring."
+        )
+
+# Asosiy menyuni ko'rsatish
+def show_main_menu(message):
+    markup = ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.add("🔍 Qidiruv", "📄 Ma'lumotlar")
+    markup.add("⚙️ Sozlamalar")
+    bot.send_message(
+        message.chat.id,
+        "📋 Asosiy menyu:",
+        reply_markup=markup
+    )
+
+# Foydalanuvchi gender tanlamagan bo'lsa, boshqa xabarlarni bloklash
+@bot.message_handler(func=lambda message: str(message.from_user.id) in users and users[str(message.from_user.id)]["gender"] is None)
+def block_message(message):
+    bot.send_message(
+        message.chat.id,
+        "Iltimos, avval jinsingizni tanlang:",
+        reply_markup=gender_keyboard()
+    )
 
 # Tugmachalar uchun asosiy menyu
 def show_main_menu(message):
@@ -70,17 +116,6 @@ def show_main_menu(message):
         reply_markup=markup
     )
 
-# Genderni qayta ishlash
-@bot.message_handler(func=lambda message: message.text in ["🙋‍♂️Erkak", "🙋‍♀️Ayol"])
-def handle_gender(message):
-    user_id = str(message.from_user.id)
-    users[user_id]["gender"] = message.text
-    save_users(users)
-    bot.send_message(
-        message.chat.id,
-        f"🙆‍♂️Rahmat! Jinsingiz: {message.text}.",
-    )
-    show_main_menu(message)
 # Lug'at ma'lumotlari
 word_list = [
     {"uz": "kitob", "en": "book"},
