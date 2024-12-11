@@ -1,23 +1,3 @@
 {
-    "1663567950": {
-        "id": 1663567950,
-        "name": "Abduraxim Xasanboyev \ud83c\uddfa\ud83c\uddff",
-        "username": "Abdurahim0525",
-        "gender": "Erkak",
-        "admin": true
-    },
-    "7238854167": {
-        "id": 7238854167,
-        "name": "Hechkim",
-        "username": "hechkim893",
-        "gender": null,
-        "admin": false
-    },
-    "5132046945": {
-        "id": 5132046945,
-        "name": "\u00cf_L\u00f2V\u00cb_\u00c3LL\u00c4H\ud83d\ude42",
-        "username": "ADU_IT",
-        "gender": null,
-        "admin": false
-    }
+   
 }
