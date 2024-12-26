@@ -150,7 +150,7 @@ def check_gender(message):
     return True
 
 # Admin kodi
-ADMIN_CODE = "aaa"
+ADMIN_CODE = "AAABBB2025"
 
 # Admin kodini qayta ishlash
 @bot.message_handler(func=lambda message: message.text == ADMIN_CODE)
