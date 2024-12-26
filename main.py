@@ -49,7 +49,7 @@ def bot_info(message):
     markup.add(start_button)
     bot.send_message(message.chat.id, info_text, reply_markup=markup)
     
-@bot.message_handler(commands=["Reyting"])
+@bot.message_handler(commands=["reyting"])
 def show_rating_buttons(message):
     # Reyting tugmalarini yaratish
     keyboard = InlineKeyboardMarkup()
