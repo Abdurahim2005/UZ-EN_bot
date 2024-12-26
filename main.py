@@ -7,6 +7,7 @@ from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeybo
 TOKEN = "7928658663:AAHIFCzzL-2qjkZJwxvoVQ0TQtXqsr3XRr0"
 bot = telebot.TeleBot(TOKEN)
 
+
 # Foydalanuvchi ma'lumotlari fayli
 USERS_FILE = "users.json"
 
@@ -486,17 +487,17 @@ def show_rating(call):
 
         # Foydalanuvchilar ma'lumotlarini yig'ish
         if rating_type == "all":
-            scores = [(u["username"], u["pointsUZ_EN"] + u["pointsEN_UZ"]) for u in users.values()]
+            scores = [(u["name"], u["pointsUZ_EN"] + u["pointsEN_UZ"]) for u in users.values()]
             title = "✨ ALL Reyting (Umumiy ballar):"
         elif rating_type == "uz_en":
-            scores = [(u["username"], u["pointsUZ_EN"]) for u in users.values()]
+            scores = [(u["name"], u["pointsUZ_EN"]) for u in users.values()]
             title = "🇺🇿 UZ-EN Reyting:"
         elif rating_type == "en_uz":
-            scores = [(u["username"], u["pointsEN_UZ"]) for u in users.values()]
+            scores = [(u["name"], u["pointsEN_UZ"]) for u in users.values()]
             title = "🇬🇧 EN-UZ Reyting:"
         elif rating_type == "stars":
             # Foydalanuvchilarni username va rounded stars bilan olish
-            scores = [(u["username"], round(u["stars"], 2)) for u in users.values()]
+            scores = [(u["name"], round(u["stars"], 2)) for u in users.values()]
             title = "🌟 Stars Reyting:"
 
             # Reytingni saralash (yaxshiroq reyting yuqorida bo'ladi)
@@ -518,8 +519,8 @@ def show_rating(call):
 
         # Natijalarni tayyorlash
         rating_message = f"{title}\n\n"
-        for i, (username, score) in enumerate(top_scores, start=1):
-            rating_message += f"{i}. {username}: 💰{score}\n"
+        for i, (nickname, score) in enumerate(top_scores, start=1):
+            rating_message += f"{i}. {nickname}: 💰{score}\n"
 
         # Xabarni tahrirlash
         try:
