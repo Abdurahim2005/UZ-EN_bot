@@ -4,7 +4,7 @@ import random
 from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 
 # Bot tokenini kiriting
-TOKEN = "6655819779:AAGXprQB17q_6gelumQwF3wJl6H5Ea4Oj5Q"
+TOKEN = "7928658663:AAHIFCzzL-2qjkZJwxvoVQ0TQtXqsr3XRr0"
 bot = telebot.TeleBot(TOKEN)
 
 # Foydalanuvchi ma'lumotlari fayli
