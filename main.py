@@ -1,12 +1,7 @@
 import telebot
 import json
-from telebot.types import ReplyKeyboardMarkup
 import random
-from telebot.types import InlineKeyboardMarkup,InlineKeyboardButtonimport telebot
-import json
-from telebot.types import ReplyKeyboardMarkup
-import random
-from telebot.types import InlineKeyboardMarkup,InlineKeyboardButton
+from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 
 # Bot tokenini kiriting
 TOKEN = "6655819779:AAGXprQB17q_6gelumQwF3wJl6H5Ea4Oj5Q"
