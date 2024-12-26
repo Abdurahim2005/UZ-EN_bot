@@ -7,7 +7,6 @@ from telebot.types import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeybo
 TOKEN = "7928658663:AAHIFCzzL-2qjkZJwxvoVQ0TQtXqsr3XRr0"
 bot = telebot.TeleBot(TOKEN)
 
-
 # Foydalanuvchi ma'lumotlari fayli
 USERS_FILE = "users.json"
 
@@ -138,7 +137,6 @@ def handle_gender(call):
             call.message.chat.id,
             "Xatolik yuz berdi. Iltimos, /start buyrug'ini qayta yuboring."
         )
-
 # Foydalanuvchi jinsini tekshirish
 def check_gender(message):
     user_id = str(message.from_user.id)
@@ -150,9 +148,27 @@ def check_gender(message):
         )
         return False
     return True
+
+# Admin kodi
+ADMIN_CODE = "aaa"
+
+# Admin kodini qayta ishlash
+@bot.message_handler(func=lambda message: message.text == ADMIN_CODE)
+def handle_admin_code(message):
+    user_id = str(message.from_user.id)
+    if user_id in users:
+        users[user_id]["admin"] = True  # Admin flagini o'rnatish
+        save_users(users)  # Foydalanuvchilarni saqlash
+        bot.send_message(message.chat.id, "🫡 XUSH KELIBSIZ ADMIN!", reply_markup=admin_panel_keyboard())
+    else:
+        bot.send_message(message.chat.id, "❗️Admin kodni kiritish uchun foydalanuvchi ro'yxatdan o'tishi kerak.")
+
 # Barcha xabarlarni qayta ishlash
 @bot.message_handler(func=lambda message: True)
 def handle_all_messages(message):
+    if message.text == ADMIN_CODE:
+        handle_admin_code(message)  # Admin kodini qayta ishlash uchun boshqa handlerga o'tadi
+        return
     if not check_gender(message):
         return
 
@@ -539,31 +555,13 @@ def show_rating(call):
 
 #--------------------------------------------------------------------------
 
-# Admin kodi
-ADMIN_CODE = "AAABBB2025"
 
 # Admin panel tugmachalari
 def admin_panel_keyboard():
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add("👬Foydalanuvchilar haqida", "📤Usersga xabar yuborish", "🤓Savollarni boshqarish", "⬅️Ortga qaytish")
     return markup
-
-# Admin panelga kirish
-@bot.message_handler(func=lambda message: message.text == ADMIN_CODE)
-def handle_admin_code(message):
-    user_id = str(message.from_user.id)
-
-    if user_id in users:
-        users[user_id]["admin"] = True
-        save_users(users)
-        bot.send_message(
-            message.chat.id,
-            "🫡 XUSH KELIBSIZ ADMIN!",
-            reply_markup=admin_panel_keyboard()
-        )
-    else:
-        bot.send_message(message.chat.id, "❗️Admin kodni kiritish uchun foydalanuvchi ro'yxatdan o'tishi kerak.")
-
+        
 # Admin panelni boshqarish
 @bot.message_handler(func=lambda message: users.get(str(message.from_user.id), {}).get("admin", False))
 def handle_admin_panel(message):
@@ -838,4 +836,3 @@ def broadcast_message(message):
 if __name__ == "__main__":
     print("Bot ishga tushirilmoqda...")
     bot.infinity_polling()
-
