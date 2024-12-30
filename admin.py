@@ -3,7 +3,7 @@ from telebot import types
 from words import word_list
 
 # Bot tokeni
-bot = telebot.TeleBot('6655819779:AAGXprQB17q_6gelumQwF3wJl6H5Ea4Oj5Q')
+bot = telebot.TeleBot('7928658663:AAHIFCzzL-2qjkZJwxvoVQ0TQtXqsr3XRr0')
 
 # Global o'zgaruvchilar
 user_states = {}  # Faylga saqlash mexanizmi qo‘shish kerak
