@@ -37,12 +37,12 @@ def handle_admin_panel(bot, message, user_states):
             msg = bot.send_message(message.chat.id, f"\n".join([f"{i + 1}. {word['uz']} - {word['en']}" for i, word in enumerate(word_list)]) + "\n___________________\n❌O'chirish uchun so'zni id kiriting\n☝️Hoslasangiz 1 ta id\n🤷‍♂️Hohlasangiz (1-10)oraliqni kiriting:")
             bot.register_next_step_handler(msg, lambda msg: process_delete_word(bot, msg))
         else:
-            bot.send_message(message.chat.id, "Hech qanday so'z mavjud emas!")
+            bot.send_message(message.chat.id, "🤷‍♂Hech qanday so'z mavjud emas!")
     elif message.text == "Chiqish":
         user_states[message.chat.id] = "default"
-        bot.send_message(message.chat.id, "Admin paneldan chiqdingiz.", reply_markup=types.ReplyKeyboardRemove())
+        bot.send_message(message.chat.id, "🚪Admin paneldan chiqdingiz.", reply_markup=types.ReplyKeyboardRemove())
     else:
-        bot.send_message(message.chat.id, "Noma'lum buyruq. Iltimos, tugmalardan foydalaning.")
+        bot.send_message(message.chat.id, "❓Noma'lum buyruq. Iltimos, tugmalardan foydalaning.")
 
 def process_add_words(bot, message):
     words_input = message.text.strip()
@@ -59,9 +59,9 @@ def process_add_words(bot, message):
             errors.append(word_input)
 
     if added_words:
-        bot.send_message(message.chat.id, f"Quyidagi so'z(lar) qo'shildi:\n" + "\n".join(added_words))
+        bot.send_message(message.chat.id, f"✅So'zlar muvaffaqiyatli qo'shildi.")
     if errors:
-        bot.send_message(message.chat.id, f"Quyidagi so'z(lar) noto'g'ri formatda kiritilgan:\n" + "\n".join(errors) + "\nIltimos, quyidagi formatda yuboring: so'z - tarjima")
+        bot.send_message(message.chat.id, f"🧐Quyidagi so'z(lar) noto'g'ri formatda kiritilgan:\n" + "\n".join(errors) + "\nIltimos, quyidagi formatda yuboring: so'z - tarjima")
 
 def process_delete_word(bot, message):
     # Kiruvchi matnni tozalash va index yoki index oralig'ini olish
@@ -84,12 +84,12 @@ def process_delete_word(bot, message):
                 deleted_words.append(f"{index + 1} - {deleted_word['uz']} - {deleted_word['en']}")
 
         if deleted_words:
-            bot.send_message(message.chat.id, f"Quyidagi so'z(lar) o'chirildi:\n" + "\n".join(deleted_words))
+            bot.send_message(message.chat.id, f"✅O'chirish muvaffaqiyatli bo'ldi.")
         else:
             bot.send_message(message.chat.id, "Ko'rsatilgan index(lar)ga mos so'z topilmadi.")
 
     except ValueError:
-        bot.send_message(message.chat.id, "Noto'g'ri format! Iltimos, to'g'ri index yoki index oralig'ini kiriting. Masalan: 1 yoki 1-10")
+        bot.send_message(message.chat.id, "❗️Noto'g'ri format! Iltimos, to'g'ri index yoki index oralig'ini kiriting. Masalan: 1 yoki 1-10")
 
 def list_words_with_indices(bot, message):
     if word_list:
@@ -97,4 +97,4 @@ def list_words_with_indices(bot, message):
         response += "\n".join([f"{i + 1} - {word['uz']} - {word['en']}" for i, word in enumerate(word_list)])
         bot.send_message(message.chat.id, response)
     else:
-        bot.send_message(message.chat.id, "So'zlar ro'yxati bo'sh.")
+        bot.send_message(message.chat.id, "😳So'zlar ro'yxati bo'sh.")
